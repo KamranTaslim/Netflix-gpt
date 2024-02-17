@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
+import { USER_AVATAR } from "../utils/constants";
 //Firebase Config
 import {
   createUserWithEmailAndPassword,
@@ -8,14 +9,12 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
 const Login = () => {
   const [IsSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(false);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const name = useRef(null);
@@ -43,8 +42,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL:
-              "https://media.licdn.com/dms/image/D4D03AQFNfSGipqgk-A/profile-displayphoto-shrink_200_200/0/1700735501736?e=1711584000&v=beta&t=WK1zjjUn-WlhtYTsmr-YWYbtRNqrSCrSpzwkEdLwwPA",
+            photoURL: USER_AVATAR,
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
@@ -56,7 +54,6 @@ const Login = () => {
                   photoURL: photoURL,
                 })
               );
-              navigate("/browse");
             })
             .catch((error) => {
               setErrorMessage(error.message);
@@ -79,8 +76,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -116,6 +111,7 @@ const Login = () => {
                 >
                   {!IsSignInForm && (
                     <input
+                      ref={name}
                       type="text"
                       placeholder="name"
                       className="p-3 my-2 bg-gray-700 rounded text-white text-lg"
