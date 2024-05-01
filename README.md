@@ -25,7 +25,13 @@
 -Fetch data for trailer video
 -Update Store with Trailer Video Database
 -Embedded the youtube video and make it autoplay and mute
--Tailwind classes
+-Tailwind classes to make Main Character look awesome
+-Build Secondary Component
+
+- Build Movie List
+- Build Movie Card
+- TMDB Image CDN URL
+  -usePopularMovies custom Hook
 
 #Features:
 -Login/Signup
